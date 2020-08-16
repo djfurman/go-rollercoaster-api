@@ -1,0 +1,96 @@
+---
+openapi: 3.0.3
+info:
+  title: Roller Coaster API
+  version: 1.0
+  decription: Catalog of roller coasters
+  termsOfService: Not a real API, only runs locally
+  contact:
+    name: Daniel furman
+    url: https://github.com/djfurman
+    email: djfurman@altmails.com
+  license:
+    name: BSD-3
+    url: https://github.com/djfurman/go-rollercoaster-api/blob/master/LICENSE
+paths:
+  /coasters:
+    description: returns list of coasters in JSON format
+    get:
+      responses:
+        200:
+          description: Successful data fetch
+          content:
+            application/json:
+              $ref: '#/components/schemas/RollerCoaster'
+    post:
+      requestBody:
+        content:
+          application/json:
+              $ref: '#/components/schemas/RollerCoaster'
+      responses:
+        200:
+          description: Successful data fetch
+          content:
+            application/json:
+              $ref: '#/components/schemas/RollerCoaster'
+  /coasters/{id}:
+    description: returns details of specific coaster in JSON format
+    get:
+      parameters:
+      - in: path
+        name: id
+        description: Unique ID of roller coaster
+        required: true
+        allowEmptyValue: false
+      responses:
+        200:
+          description: Successful data fetch
+          content:
+            application/json:
+              $ref: '#/components/schemas/RollerCoaster'
+  /coasters/random:
+    description: redirects (HTTP Response 302) to a random coaster
+    get:
+      200:
+        description: Successful data fetch
+        content:
+          application/json:
+            $ref: '#/components/schemas/RollerCoaster'
+  /admin:
+    description: requires basic authentication
+    get:
+      200:
+        description: Successful data fetch
+        content:
+          application/json:
+            $ref: '#/components/schemas/RollerCoaster'
+components:
+  schemas:
+    GeneralError:
+      type: object
+      properties:
+        errorMessage:
+          type: string
+    RollerCoaster:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the roller coaster
+        name:
+          type: string
+          description: Name of the roller coaster
+        inPark:
+          type: string
+          description: Name of the amusement park
+        manufacturer:
+          type: string
+          description: Name of the manufacturer
+        height:
+          type: integer
+          format: int-32
+          description: Height of roller coaster in some unit
+  responses:
+  parameters:
+  examples:
+  headers:
